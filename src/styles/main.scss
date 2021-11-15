@@ -121,6 +121,28 @@ body {
   }
 }
 
+.game-start-btn {
+  background: lighten($navbar-bg, 10%);
+  width: 50%;
+  font-size: 1.5rem;
+  border-radius: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(0.95);
+    color: lighten(green, 10%);
+  }
+}
+
+.game-logo:after {
+  display: block;
+  content: "?";
+  font-size: 15rem;
+  animation: rotate-game-question infinite 20s linear;
+}
+
 .game-panel {
   display: flex;
   justify-content: center;
@@ -147,13 +169,10 @@ body {
     background-color: $navbar-bg;
     display: flex;
     align-items: center;
-    justify-content: center;
-    @include set-text-color($navbar-bg);
+    justify-content: flex-start;
+    flex-direction: column;
 
-    h1 {
-      font-size: 20rem;
-      animation: rotate-game-question infinite 20s linear;
-    }
+    @include set-text-color($navbar-bg);
   }
 
   &-right {

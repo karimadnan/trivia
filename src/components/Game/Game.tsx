@@ -1,56 +1,29 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { Difficulty } from '../../APIs/fetchQuestions';
-
-const NOQ = [5, 10, 15];
-const DIFS = Object.values(Difficulty);
-
-type QuestionsN = {
-    noq: number[];
-    value: number;
-    setValue: Dispatch<SetStateAction<number>>;
-};
-
-
-type DifProps = {
-    difs: string[];
-    value: string;
-    setValue: Dispatch<SetStateAction<string>>;
-};
-
-const DifBtns: React.FC<DifProps> = ({ difs, value, setValue }) => {
-    return (
-        <div className='difs-btn'>
-            {difs.map((d) => <div key={d} onClick={() => setValue(d)} className={`difs-btn-${d} ${value === d && `selected`}`}>{d}</div>)}
-        </div>
-    )
-};
-
-const NoqBtns: React.FC<QuestionsN> = ({ noq, value, setValue }) => {
-    return (
-        <div className='noq'>
-            {noq.map((n) => <div key={n} onClick={() => setValue(n)} className={`noq-btn ${value === n && `selected`}`}>x{n}</div>)}
-        </div>
-    )
-};
+import React, { useState } from 'react';
+import { fetchQuizQuestions, Difficulty, QuestionsState } from '../../APIs/fetchQuestions';
+import { NOQ, GState } from './_config';
+import RightPanel from './RightPanel';
+import LeftPanel from './LeftPanel';
 
 const Game: React.FC = () => {
-    const [diffculty, setDiffculty] = useState<string>(Difficulty.EASY)
-    const [diffculties] = useState<string[]>(DIFS)
+    const [difficulty, setDifficulty] = useState<string>(Difficulty.EASY)
     const [noq, setNoq] = useState<number>(NOQ[0]);
+    const [gameState, setGameState] = useState<string>(GState.WAITING)
+
+    const startGame = async (): Promise<QuestionsState[]> => {
+        const payload = await fetchQuizQuestions(noq, difficulty);
+        console.log(payload, "PAYLOAD");
+        return payload
+    };
 
     return (
         <div className='game-panel'>
-            <div className='game-panel-left'>
-                <h1>?</h1>
-            </div>
-            <div className='game-panel-right'>
-                <div>
-                <label>Number of Questions</label>
-                    <NoqBtns noq={NOQ} value={noq} setValue={setNoq} />
-                <label>Select Diffculty</label>
-                    <DifBtns difs={diffculties} value={diffculty} setValue={setDiffculty} />
-                </div>
-            </div>
+            <LeftPanel startGame={startGame} gameState={gameState} />
+            <RightPanel 
+                gameState={gameState}
+                noq={noq}  
+                setNoq={setNoq} 
+                difficulty={difficulty} 
+                setDifficulty={setDifficulty}/>
         </div>
     )
 };
