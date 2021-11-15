@@ -1,0 +1,17 @@
+@mixin btn($bg) {
+  border: none;
+  background-color: $bg;
+  @include set-text-color($bg);
+}
+
+@mixin btn-dif {
+  position: relative;
+  cursor: pointer;
+  border: 3px solid $navbar-bg;
+  padding: 0.5rem;
+  border-radius: 2rem;
+
+  &:hover {
+    transform: scale(0.95);
+  }
+}

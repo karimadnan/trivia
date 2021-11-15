@@ -1,0 +1,11 @@
+$navbar-bg: #212121;
+$primary-color: #b983ff;
+$secondary-color: #94b3fd;
+
+@mixin set-text-color($color) {
+  @if lightness($color) >= 70 {
+    color: #212121;
+  } @else {
+    color: #fff;
+  }
+}
