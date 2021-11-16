@@ -13,9 +13,9 @@ const Game: React.FC = () => {
     const [progress, setProgress] = useState<number>(0);
 
     const startGame = async (): Promise<void> => {
+        if (gameState !== GState.WAITING) return;
         setGameState(GState.LOADING);
         const payload = await fetchQuizQuestions(noq, difficulty);
-        console.log(payload, "PAYLOAD");
         setQuestions(payload);
         setGameState(GState.STARTED);
     };

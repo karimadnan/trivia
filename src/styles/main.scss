@@ -131,9 +131,19 @@ body {
   text-align: center;
   cursor: pointer;
 
-  &:hover {
-    transform: scale(0.95);
-    color: lighten(green, 10%);
+  &-enabled {
+    @extend .game-start-btn;
+    &:hover {
+      transform: scale(0.95);
+      color: lighten(green, 10%);
+    }
+  }
+
+  &-disabled {
+    @extend .game-start-btn;
+    &:hover {
+      cursor: not-allowed;
+    }
   }
 }
 
